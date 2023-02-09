@@ -10,6 +10,6 @@ export let options = {
 };
 
 export default function() {
-  http.get("http://ecommerce.test.k6.io");
+  http.post("http://34.29.70.21/carts/1/items", {"itemId":"03fef6ac-1896-4ce8-bd69-b798f85c6e0b", "unitPrice":"99.99"});
   sleep(3);
 };
