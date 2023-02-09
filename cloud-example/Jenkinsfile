@@ -6,9 +6,54 @@ pipeline {
         K6_CLOUD_PROJECT_ID=credentials("K6_CLOUD_PROJECT_ID")
     }
     stages {
+        stage('Build Code') {
+            steps{
+                container('mvn'){
+                    echo 'Code Building...'
+                    script {
+                        sh 'mvn -v'
+                    }
+                    sleep 3    
+                }
+            }
+        }
+        stage('Build Image'){
+            steps{
+                container('docker'){
+                    echo 'Image Building...'
+                    script{
+                        sh 'docker'
+                    }
+                    sleep 3
+                }
+            }
+        }
+        stage('Push Image to Repo'){
+            steps{
+                container('docker'){
+                    echo 'Pushing Image...'
+                    script{
+                        sh 'docker'
+                    }
+                    sleep 3
+                }
+            }
+        }
+        stage('Deploy to Staging'){
+            steps{
+                container('kubectl'){
+                    echo 'Deploying build to staging...'
+                    script{
+                        sh 'kubectl config view'
+                    }                    
+                    sleep 5
+                }
+            }
+        }
         stage('Performance Testing') {
             steps {
                 echo 'Running performance tests on k6 cloud...'
+                sh 'curl -X DELETE http://34.29.70.21/carts/1'
                 sh 'sudo chmod +x setup_k6.sh'
                 sh 'sudo ./setup_k6.sh'
                 sh 'k6 login cloud --token ${K6_API_TOKEN}'
