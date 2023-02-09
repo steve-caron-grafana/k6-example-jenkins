@@ -8,12 +8,9 @@ pipeline {
     stages {
         stage('Build Code') {
             steps{
-                container('mvn'){
-                    echo 'Code Building...'
-                    script {
-                        sh 'mvn -v'
-                    }
-                    sleep 3    
+                echo 'Code Building...'
+                sh 'mvn -v'
+                sleep 3    
                 }
             }
         }
