@@ -11,7 +11,6 @@ pipeline {
                 echo 'Code Building...'
                 sh 'mvn -v'
                 sleep 3    
-                }
             }
         }
         stage('Build Image'){
