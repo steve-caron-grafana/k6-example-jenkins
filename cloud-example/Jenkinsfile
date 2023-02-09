@@ -15,35 +15,23 @@ pipeline {
         }
         stage('Build Image'){
             steps{
-                container('docker'){
-                    echo 'Image Building...'
-                    script{
-                        sh 'docker'
-                    }
-                    sleep 3
-                }
+                echo 'Image Building...'
+                sh 'docker'
+                sleep 3
             }
         }
         stage('Push Image to Repo'){
             steps{
-                container('docker'){
-                    echo 'Pushing Image...'
-                    script{
-                        sh 'docker'
-                    }
-                    sleep 3
-                }
+                echo 'Pushing Image...'
+                sh 'docker'
+                sleep 3
             }
         }
         stage('Deploy to Staging'){
             steps{
-                container('kubectl'){
-                    echo 'Deploying build to staging...'
-                    script{
-                        sh 'kubectl config view'
-                    }                    
-                    sleep 5
-                }
+                echo 'Deploying build to staging...'
+                sh 'kubectl config view'                   
+                sleep 5
             }
         }
         stage('Performance Testing') {
